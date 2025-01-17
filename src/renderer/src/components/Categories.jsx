@@ -252,12 +252,16 @@ export function Kecantikan() {
  }
 
 export function Default() {
-   const {arrProducts, userActive, moveBuyNowPage} = useContext(AuthContext)
+   const {arrProducts, userActive, moveBuyNowPage, addKeranjangUser} = useContext(AuthContext)
    const navigate = useNavigate()
 
-   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+   const [open1, setOpen1] = useState(false);
+   const handleOpen1 = () => setOpen1(true);
+   const handleClose1 = () => setOpen1(false);
+
+   const [open2, setOpen2] = useState(false);
+   const handleOpen2 = () => setOpen2(true);
+   const handleClose2 = () => setOpen2(false);
 
    function beliSekarang(produk) {
       if(userActive) {
@@ -266,8 +270,13 @@ export function Default() {
          // return <Navigate to='/buynow' />
          navigate('/buynow')
       } else {
-         handleOpen()
+         handleOpen1()
       }
+   }
+
+   function masukkanKeranjang(idx) {
+      addKeranjangUser(idx)
+      handleOpen2()
    }
 
    return (
@@ -292,7 +301,7 @@ export function Default() {
                      </Typography>
                      </CardContent>
                      <CardActions>
-                     <Button variant='contained' sx={{backgroundColor: '#00b140'}}>Masukkan Keranjang</Button>
+                     <Button variant='contained' sx={{backgroundColor: '#00b140'}} onClick={() => masukkanKeranjang(p.idProduk)}>Masukkan Keranjang</Button>
                      <Button variant='contained' sx={{backgroundColor: '#00b140'}} onClick={() => beliSekarang(p)}>Beli Sekarang</Button>
                      </CardActions>
                   </Card>
@@ -301,10 +310,11 @@ export function Default() {
          </Grid2>
 
          <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
+            
+      {/* modal warning kalau user belum login */}
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={open1}
+        onClose={handleClose1}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -314,6 +324,20 @@ export function Default() {
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Silakan login / signup terlebih dahulu untuk melanjutkan pembelian
+          </Typography>
+        </Box>
+      </Modal>
+
+      {/* modal info berhasil masukkan keranjang */}
+      <Modal
+        open={open2}
+        onClose={handleClose2}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={styleModal}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Anda berhasil memasukkan produk ke keranjang
           </Typography>
         </Box>
       </Modal>

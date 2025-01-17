@@ -30,8 +30,8 @@ export default function BuyNow() {
    // const produk = location.state
 
    const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+   const handleOpen = () => setOpen(true);
+   const handleClose = () => setOpen(false);
 
   const navigate = useNavigate()
 
@@ -43,7 +43,7 @@ export default function BuyNow() {
 
   function handleBeli() {
    const arrBeli = [{produk: productClicked, jumlah}]
-   buyProducts(arrBeli)
+   buyProducts(arrBeli, false)
    // const sisaSaldo = userActive.saldo - (productClicked.harga* jumlah)
    // userActive.saldo = sisaSaldo
    // const newUsers = arrUsers.map((u) => {
@@ -145,7 +145,6 @@ export default function BuyNow() {
          </Container>
 
          <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
         open={open}
         onClose={handleClose}

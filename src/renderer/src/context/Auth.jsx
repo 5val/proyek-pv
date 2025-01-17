@@ -96,7 +96,7 @@ export default function Auth({children}) {
       setProductClicked(product)
    }
 
-   function buyProducts(productsDibeli) {
+   function buyProducts(productsDibeli, isKeranjang) {
       let total = 0
       let arrBeli = []
       let newProducts = arrProducts.slice()
@@ -107,7 +107,7 @@ export default function Auth({children}) {
       }
       const sisaSaldo = userActive.saldo - total
       userActive.saldo = sisaSaldo
-      const newUsers = arrUsers.map((u) => {
+      let newUsers = arrUsers.map((u) => {
          if(u.id === userActive.id) {
             return {...u, saldo: sisaSaldo}
          } else {
@@ -121,6 +121,25 @@ export default function Auth({children}) {
          total
       }
       const newTransactions = [...arrTransactions, newTransaction]
+      
+      if(isKeranjang){
+         newUsers = newUsers.map((u) => {
+            if(userActive.id == u.id) {
+               let newKeranjang = (u.keranjang).slice()
+               for (let i = 0; i < arrBeli.length; i++) {
+                  newKeranjang = newKeranjang.filter((k) => k.idProduk !== arrBeli[i].idProduk)
+               }
+               const newUser = {...u, keranjang: newKeranjang}
+               return newUser
+            } else {
+               return u
+            }
+         })
+         setArrUsers(newUsers)
+         const newUserActive = newUsers.find((u) => u.id == userActive.id)
+         setUserActive(newUserActive)
+      }
+
       setArrUsers(newUsers)
       setArrProducts(newProducts)
       setArrTransactions(newTransactions)
@@ -137,7 +156,51 @@ export default function Auth({children}) {
       window.api.saveUsers(newUsers)
    }
 
-   const auth = {arrUsers, arrProducts, arrTransactions, userActive, login, logout, signup, loginErr, signupErr, addProduct, editProduct, deleteProduct, productEdit, moveEditPage, moveBuyNowPage, productClicked, buyProducts, transActive, userDaftarPenjual}
+   function deleteItemKeranjang(idx) {
+      const newUsers = arrUsers.map((u) => {
+         if(userActive.id == u.id) {
+            const newKeranjang = (u.keranjang).filter((k) => k.idProduk !== idx)
+            const newUser = {...u, keranjang: newKeranjang}
+            return newUser
+         } else {
+            return u
+         }
+      })
+      setArrUsers(newUsers)
+      window.api.saveUsers(newUsers)
+      const newUserActive = newUsers.find((u) => u.id == userActive.id)
+      setUserActive(newUserActive)
+   }
+
+   function addKeranjangUser(idx) {
+      const newUsers = arrUsers.map((u) => {
+         if(userActive.id == u.id) {
+            let newKeranjang = (u.keranjang).slice()
+            let idxKeranjang = -1
+            for (let i = 0; i < newKeranjang.length; i++) {
+               if(newKeranjang[i].idProduk == idx) {
+                  idxKeranjang = i
+               }
+            }
+            if(idxKeranjang > -1) {
+               newKeranjang[idxKeranjang].jumlah = newKeranjang[idxKeranjang].jumlah + 1
+            } else {
+               newKeranjang.push({idProduk: idx, jumlah: 1})
+            }
+            const newUser = {...u, keranjang: newKeranjang}
+            return newUser
+         } else {
+            return u
+         }
+      })
+      setArrUsers(newUsers)
+      window.api.saveUsers(newUsers)
+      const newUserActive = newUsers.find((u) => u.id == userActive.id)
+      setUserActive(newUserActive)
+   }
+
+   const auth = {arrUsers, arrProducts, arrTransactions, userActive, login, logout, signup, loginErr, signupErr, addProduct, editProduct, deleteProduct, productEdit, moveEditPage, moveBuyNowPage, productClicked, buyProducts, transActive, userDaftarPenjual, deleteItemKeranjang, addKeranjangUser}
+
    return <AuthContext.Provider value={auth}>
       {children}
    </AuthContext.Provider>
