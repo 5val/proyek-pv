@@ -99,13 +99,13 @@ function App() {
    //       addProduct,
    //       editProduct
    //    }}>
-      <Container>
+      <>
          <Navbar />
          <div style={{marginTop: '80px'}}>
             <Outlet></Outlet>
          </div>
          <Footer />
-      </Container>
+      </>
    //  </DataContext.Provider>
   )
 }

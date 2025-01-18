@@ -4,6 +4,7 @@ import { AppBar, Toolbar, Typography, Button, Box, TextField, IconButton, Avatar
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import SearchIcon from '@mui/icons-material/Search';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { AuthContext } from '../context/Auth';
 
 // import DataContext from '../context/Auth';
@@ -73,7 +74,14 @@ export default function Navbar() {
           </IconButton>
         </Box>
         {userActive ? (
-         <NavLink to="/profile"><Avatar /></NavLink>
+         <Box sx={{display: 'flex'}}>
+            <NavLink to="/usercart">
+               <IconButton size='medium' sx={{ marginRight: 2}}>
+                  <ShoppingCartIcon sx={{color: 'white'}} />
+               </IconButton>
+            </NavLink>
+            <NavLink to="/profile"><Avatar /></NavLink>
+         </Box>
         ) : (
          <Box sx={{ display: 'flex', gap: 2, flexGrow: 1, justifyContent: 'end' }}>
           <NavLink to="/signup" style={{color: 'white'}}><Button color="inherit">Sign Up</Button></NavLink>

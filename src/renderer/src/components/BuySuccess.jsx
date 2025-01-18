@@ -13,6 +13,11 @@ export default function BuySuccess() {
 
    const {transActive} = useContext(AuthContext)
 
+   let totalHarga = 0
+   for (let i = 0; i < transActive.length; i++) {
+      totalHarga = totalHarga + ((transActive[i].produk.harga)* transActive[i].jumlah)
+   }
+
    return(
       <>
          <Container sx={{minHeight: '680px'}}>
@@ -60,6 +65,14 @@ export default function BuySuccess() {
                      </Typography>
                   </Box>
                ))}
+               <Box display="flex" sx={{marginTop: '20px', gap: 5, justifyContent: 'end'}}>
+                  <Typography variant="body2">
+                     <strong>Total</strong>
+                  </Typography>
+                  <Typography variant="body2">
+                     <strong>Rp {totalHarga.toLocaleString('ID-id')}</strong>
+                  </Typography>
+               </Box>
                </Box>
             </Paper>
          </Grid2>

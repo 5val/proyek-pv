@@ -14,8 +14,10 @@ function Login() {
    const navigate = useNavigate()
 
    function handleLogin() {
-      login(inpEmail, inpPass)
-      navigate('/home')
+      const sukses = login(inpEmail, inpPass)
+      if(sukses) {
+         navigate('/home')
+      }
    }
 
    // if(userActive) {

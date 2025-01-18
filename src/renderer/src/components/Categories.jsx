@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link, Navigate, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Container, Paper, Button, Grid2, Card, CardMedia, CardContent, Typography, CardActions, Modal, Box } from '@mui/material';
 import { AuthContext } from '../context/Auth';
+import ProductCard from './ProductCard';
 
 // import DataContext from '../context/Auth';
 
@@ -27,28 +28,7 @@ export function RumahTangga() {
          <h1>Produk Rumah Tangga</h1>
          <Grid2 container spacing={3} sx={{marginTop: '30px'}}>
             {filteredProducts.map((p, index) => (
-               <Grid2 key={index} size={3}>
-                  <Card sx={{ maxWidth: 375 }}>
-                     <CardMedia
-                     component="img"
-                     alt="green iguana"
-                     height="140"
-                     image={p.gambar}
-                     />
-                     <CardContent sx={{height: '120px'}}>
-                     <Typography gutterBottom variant="h5" component="div">
-                        {p.nama}
-                     </Typography>
-                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        Rp {(p.harga).toLocaleString('ID-id')}
-                     </Typography>
-                     </CardContent>
-                     <CardActions>
-                     <Button variant='contained' sx={{backgroundColor: '#00b140'}}>Masukkan Keranjang</Button>
-                     <Button variant='contained' sx={{backgroundColor: '#00b140'}}>Beli Sekarang</Button>
-                     </CardActions>
-                  </Card>
-               </Grid2>
+               <ProductCard key={index} produkProp={p} />
             ))}
          </Grid2>
       </Container>
@@ -66,28 +46,7 @@ export function Elektronik() {
          <h1>Produk Elektronik</h1>
          <Grid2 container spacing={3} sx={{marginTop: '30px'}}>
             {filteredProducts.map((p, index) => (
-               <Grid2 key={index} size={3}>
-                  <Card sx={{ maxWidth: 375 }}>
-                     <CardMedia
-                     component="img"
-                     alt="green iguana"
-                     height="140"
-                     image={p.gambar}
-                     />
-                     <CardContent sx={{height: '120px'}}>
-                     <Typography gutterBottom variant="h5" component="div">
-                        {p.nama}
-                     </Typography>
-                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        Rp {(p.harga).toLocaleString('ID-id')}
-                     </Typography>
-                     </CardContent>
-                     <CardActions>
-                     <Button variant='contained' sx={{backgroundColor: '#00b140'}}>Masukkan Keranjang</Button>
-                     <Button variant='contained' sx={{backgroundColor: '#00b140'}}>Beli Sekarang</Button>
-                     </CardActions>
-                  </Card>
-               </Grid2>
+               <ProductCard key={index} produkProp={p} />
             ))}
          </Grid2>
       </Container>
@@ -105,28 +64,7 @@ export function Fashion() {
          <h1>Produk Fashion</h1>
          <Grid2 container spacing={3} sx={{marginTop: '30px'}}>
             {filteredProducts.map((p, index) => (
-               <Grid2 key={index} size={3}>
-                  <Card sx={{ maxWidth: 375 }}>
-                     <CardMedia
-                     component="img"
-                     alt="green iguana"
-                     height="140"
-                     image={p.gambar}
-                     />
-                     <CardContent sx={{height: '120px'}}>
-                     <Typography gutterBottom variant="h5" component="div">
-                        {p.nama}
-                     </Typography>
-                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        Rp {(p.harga).toLocaleString('ID-id')}
-                     </Typography>
-                     </CardContent>
-                     <CardActions>
-                     <Button variant='contained' sx={{backgroundColor: '#00b140'}}>Masukkan Keranjang</Button>
-                     <Button variant='contained' sx={{backgroundColor: '#00b140'}}>Beli Sekarang</Button>
-                     </CardActions>
-                  </Card>
-               </Grid2>
+               <ProductCard key={index} produkProp={p} />
             ))}
          </Grid2>
       </Container>
@@ -144,28 +82,7 @@ export function Kecantikan() {
           <h1>Produk Kecantikan</h1>
           <Grid2 container spacing={3} sx={{marginTop: '30px'}}>
             {filteredProducts.map((p, index) => (
-               <Grid2 key={index} size={3}>
-                  <Card sx={{ maxWidth: 375 }}>
-                     <CardMedia
-                     component="img"
-                     alt="green iguana"
-                     height="140"
-                     image={p.gambar}
-                     />
-                     <CardContent sx={{height: '120px'}}>
-                     <Typography gutterBottom variant="h5" component="div">
-                        {p.nama}
-                     </Typography>
-                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        Rp {(p.harga).toLocaleString('ID-id')}
-                     </Typography>
-                     </CardContent>
-                     <CardActions>
-                     <Button variant='contained' sx={{backgroundColor: '#00b140'}}>Masukkan Keranjang</Button>
-                     <Button variant='contained' sx={{backgroundColor: '#00b140'}}>Beli Sekarang</Button>
-                     </CardActions>
-                  </Card>
-               </Grid2>
+               <ProductCard key={index} produkProp={p} />
             ))}
          </Grid2>
        </Container>
@@ -183,28 +100,7 @@ export function Kecantikan() {
           <h1>Produk Kesehatan</h1>
           <Grid2 container spacing={3} sx={{marginTop: '30px'}}>
             {filteredProducts.map((p, index) => (
-               <Grid2 key={index} size={3}>
-                  <Card sx={{ maxWidth: 375 }}>
-                     <CardMedia
-                     component="img"
-                     alt="green iguana"
-                     height="140"
-                     image={p.gambar}
-                     />
-                     <CardContent sx={{height: '120px'}}>
-                     <Typography gutterBottom variant="h5" component="div">
-                        {p.nama}
-                     </Typography>
-                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        Rp {(p.harga).toLocaleString('ID-id')}
-                     </Typography>
-                     </CardContent>
-                     <CardActions>
-                     <Button variant='contained' sx={{backgroundColor: '#00b140'}}>Masukkan Keranjang</Button>
-                     <Button variant='contained' sx={{backgroundColor: '#00b140'}}>Beli Sekarang</Button>
-                     </CardActions>
-                  </Card>
-               </Grid2>
+               <ProductCard key={index} produkProp={p} />
             ))}
          </Grid2>
        </Container>
@@ -222,28 +118,7 @@ export function Kecantikan() {
           <h1>Produk Makanan & Minuman</h1>
           <Grid2 container spacing={3} sx={{marginTop: '30px'}}>
             {filteredProducts.map((p, index) => (
-               <Grid2 key={index} size={3}>
-                  <Card sx={{ maxWidth: 375 }}>
-                     <CardMedia
-                     component="img"
-                     alt="green iguana"
-                     height="140"
-                     image={p.gambar}
-                     />
-                     <CardContent sx={{height: '120px'}}>
-                     <Typography gutterBottom variant="h5" component="div">
-                        {p.nama}
-                     </Typography>
-                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        Rp {(p.harga).toLocaleString('ID-id')}
-                     </Typography>
-                     </CardContent>
-                     <CardActions>
-                     <Button variant='contained' sx={{backgroundColor: '#00b140'}}>Masukkan Keranjang</Button>
-                     <Button variant='contained' sx={{backgroundColor: '#00b140'}}>Beli Sekarang</Button>
-                     </CardActions>
-                  </Card>
-               </Grid2>
+               <ProductCard key={index} produkProp={p} />
             ))}
          </Grid2>
        </Container>
@@ -252,72 +127,16 @@ export function Kecantikan() {
  }
 
 export function Default() {
-   const {arrProducts, userActive, moveBuyNowPage} = useContext(AuthContext)
-   const navigate = useNavigate()
-
-   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-   function beliSekarang(produk) {
-      if(userActive) {
-         // navigate("/buynow", {state: produk})
-         moveBuyNowPage(produk)
-         // return <Navigate to='/buynow' />
-         navigate('/buynow')
-      } else {
-         handleOpen()
-      }
-   }
+   const {arrProducts} = useContext(AuthContext)
 
    return (
      <>
        <Container sx={{minHeight: '370px'}}>
          <Grid2 container spacing={3} sx={{marginTop: '30px'}}>
             {arrProducts.map((p, index) => (
-               <Grid2 key={index} size={3}>
-                  <Card sx={{ maxWidth: 375 }}>
-                     <CardMedia
-                     component="img"
-                     alt="green iguana"
-                     height="140"
-                     image={p.gambar}
-                     />
-                     <CardContent sx={{height: '120px'}}>
-                     <Typography gutterBottom variant="h5" component="div">
-                        {p.nama}
-                     </Typography>
-                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        Rp {(p.harga).toLocaleString('ID-id')}
-                     </Typography>
-                     </CardContent>
-                     <CardActions>
-                     <Button variant='contained' sx={{backgroundColor: '#00b140'}}>Masukkan Keranjang</Button>
-                     <Button variant='contained' sx={{backgroundColor: '#00b140'}} onClick={() => beliSekarang(p)}>Beli Sekarang</Button>
-                     </CardActions>
-                  </Card>
-               </Grid2>
+               <ProductCard key={index} produkProp={p} />
             ))}
          </Grid2>
-
-         <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={styleModal}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Peringatan
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Silakan login / signup terlebih dahulu untuk melanjutkan pembelian
-          </Typography>
-        </Box>
-      </Modal>
-    </div>
       </Container>
      </>
    )

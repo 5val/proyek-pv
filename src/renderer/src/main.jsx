@@ -11,6 +11,7 @@ import BuyNow from './components/BuyNow'
 import BuySuccess from './components/BuySuccess'
 import UpdateProduct from './components/UpdateProduct'
 import History from './components/History'
+import UserCart from './components/UserCart'
 import {Elektronik, Default, Fashion, Kecantikan, Kesehatan, MakananMinuman, RumahTangga} from './components/Categories'
 import {
    createBrowserRouter,
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
          {
             path: '/history',
             element: <History />
+         },
+         {
+            path: '/usercart',
+            element: <UserCart />
          }
       ]
    },

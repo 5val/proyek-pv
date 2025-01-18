@@ -30,8 +30,8 @@ export default function BuyNow() {
    // const produk = location.state
 
    const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+   const handleOpen = () => setOpen(true);
+   const handleClose = () => setOpen(false);
 
   const navigate = useNavigate()
 
@@ -43,7 +43,7 @@ export default function BuyNow() {
 
   function handleBeli() {
    const arrBeli = [{produk: productClicked, jumlah}]
-   buyProducts(arrBeli)
+   buyProducts(arrBeli, false)
    // const sisaSaldo = userActive.saldo - (productClicked.harga* jumlah)
    // userActive.saldo = sisaSaldo
    // const newUsers = arrUsers.map((u) => {
@@ -68,8 +68,8 @@ export default function BuyNow() {
    // window.api.saveUsers(newUsers)
    // window.api.saveTransactions(newTransactions)
    // navigate('/buysuccess', {state: arrBeli})
-   // return <Navigate to='/buysuccess' />
    handleClose()
+   // return <Navigate to='/buysuccess' />
    navigate('/buysuccess')
   }
 
@@ -136,7 +136,7 @@ export default function BuyNow() {
                   <Divider sx={{ marginY: 2 }} />
 
                   <Button variant="contained" fullWidth sx={{ padding: 1.5, backgroundColor: '#00b140' }} onClick={handleOpen}>
-                     Beli Sekarang
+                     Checkout
                   </Button>
                   </CardContent>
                </Card>
@@ -145,7 +145,6 @@ export default function BuyNow() {
          </Container>
 
          <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
         open={open}
         onClose={handleClose}

@@ -13,7 +13,6 @@ export default function Auth({children}) {
    const [productEdit, setProductEdit] = useState(undefined)
    const [productClicked, setProductClicked] = useState(undefined)
    const [transActive, setTransActive] = useState(undefined)
-   // const [arrBeli, setArrBeli] = useState([])
 
    useEffect(() => {
       window.api.loadUsers().then((data) => {
@@ -32,11 +31,11 @@ export default function Auth({children}) {
       for (let i = 0; i < arrUsers.length; i++) {
          if(email === arrUsers[i].email && password === arrUsers[i].password) {
             setUserActive(arrUsers[i])
-            // return <Navigate to='/home' />
-            return
+            return true
          }
       }
       setLoginErr('Username / Password Salah')
+      return false
    }
 
    function logout() {
@@ -96,16 +95,18 @@ export default function Auth({children}) {
       setProductClicked(product)
    }
 
-   function buyProducts(productsDibeli) {
+   function buyProducts(productsDibeli, isKeranjang) {
       let total = 0
       let arrBeli = []
+      let newProducts = arrProducts.slice()
       for (let i = 0; i < productsDibeli.length; i++) {
          total += ((productsDibeli[i].produk).harga * productsDibeli[i].jumlah)
          arrBeli.push({idProduk: (productsDibeli[i].produk).idProduk, jumlah: productsDibeli[i].jumlah})
+         newProducts = newProducts.map((p) => p.idProduk == (productsDibeli[i].produk).idProduk ? ({...p, stok: p.stok-productsDibeli[i].jumlah}) : p)
       }
       const sisaSaldo = userActive.saldo - total
       userActive.saldo = sisaSaldo
-      const newUsers = arrUsers.map((u) => {
+      let newUsers = arrUsers.map((u) => {
          if(u.id === userActive.id) {
             return {...u, saldo: sisaSaldo}
          } else {
@@ -119,14 +120,86 @@ export default function Auth({children}) {
          total
       }
       const newTransactions = [...arrTransactions, newTransaction]
+      
+      if(isKeranjang){
+         newUsers = newUsers.map((u) => {
+            if(userActive.id == u.id) {
+               let newKeranjang = (u.keranjang).slice()
+               for (let i = 0; i < arrBeli.length; i++) {
+                  newKeranjang = newKeranjang.filter((k) => k.idProduk !== arrBeli[i].idProduk)
+               }
+               const newUser = {...u, keranjang: newKeranjang}
+               return newUser
+            } else {
+               return u
+            }
+         })
+         setArrUsers(newUsers)
+         const newUserActive = newUsers.find((u) => u.id == userActive.id)
+         setUserActive(newUserActive)
+      }
+
       setArrUsers(newUsers)
+      setArrProducts(newProducts)
       setArrTransactions(newTransactions)
       setTransActive(productsDibeli)
       window.api.saveUsers(newUsers)
+      window.api.saveProducts(newProducts)
       window.api.saveTransactions(newTransactions)
    }
 
-   const auth = {arrUsers, arrProducts, arrTransactions, userActive, login, logout, signup, loginErr, signupErr, addProduct, editProduct, deleteProduct, productEdit, moveEditPage, moveBuyNowPage, productClicked, buyProducts, transActive}
+   function userDaftarPenjual() {
+      userActive.daftarPenjual = true
+      const newUsers = arrUsers.map((u) => u.id == userActive.id ? userActive : u)
+      setArrUsers(newUsers)
+      window.api.saveUsers(newUsers)
+   }
+
+   function deleteItemKeranjang(idx) {
+      const newUsers = arrUsers.map((u) => {
+         if(userActive.id == u.id) {
+            const newKeranjang = (u.keranjang).filter((k) => k.idProduk !== idx)
+            const newUser = {...u, keranjang: newKeranjang}
+            return newUser
+         } else {
+            return u
+         }
+      })
+      setArrUsers(newUsers)
+      window.api.saveUsers(newUsers)
+      const newUserActive = newUsers.find((u) => u.id == userActive.id)
+      setUserActive(newUserActive)
+   }
+
+   function addKeranjangUser(idx) {
+      const newUsers = arrUsers.map((u) => {
+         if(userActive.id == u.id) {
+            let newKeranjang = (u.keranjang).slice()
+            let idxKeranjang = -1
+            for (let i = 0; i < newKeranjang.length; i++) {
+               if(newKeranjang[i].idProduk == idx) {
+                  idxKeranjang = i
+               }
+            }
+            if(idxKeranjang > -1) {
+               newKeranjang[idxKeranjang].jumlah = newKeranjang[idxKeranjang].jumlah + 1
+            } else {
+               newKeranjang.push({idProduk: idx, jumlah: 1})
+            }
+            const newUser = {...u, keranjang: newKeranjang}
+            return newUser
+         } else {
+            return u
+         }
+      })
+      setArrUsers(newUsers)
+      window.api.saveUsers(newUsers)
+      const newUserActive = newUsers.find((u) => u.id == userActive.id)
+      setUserActive(newUserActive)
+   }
+
+   const auth = {arrUsers, arrProducts, arrTransactions, userActive, login, logout, signup, loginErr, signupErr, addProduct, editProduct, deleteProduct, productEdit, moveEditPage, moveBuyNowPage, productClicked, buyProducts, transActive, userDaftarPenjual, deleteItemKeranjang, addKeranjangUser}
+
    return <AuthContext.Provider value={auth}>
       {children}
    </AuthContext.Provider>
