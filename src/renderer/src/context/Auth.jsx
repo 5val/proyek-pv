@@ -13,7 +13,6 @@ export default function Auth({children}) {
    const [productEdit, setProductEdit] = useState(undefined)
    const [productClicked, setProductClicked] = useState(undefined)
    const [transActive, setTransActive] = useState(undefined)
-   // const [arrBeli, setArrBeli] = useState([])
 
    useEffect(() => {
       window.api.loadUsers().then((data) => {
@@ -103,7 +102,7 @@ export default function Auth({children}) {
       for (let i = 0; i < productsDibeli.length; i++) {
          total += ((productsDibeli[i].produk).harga * productsDibeli[i].jumlah)
          arrBeli.push({idProduk: (productsDibeli[i].produk).idProduk, jumlah: productsDibeli[i].jumlah})
-         newProducts = newProducts.map((p) => p.idProduk == (productsDibeli[i].produk).idProduk ? ({...p, stok: p.stok-1}) : p)
+         newProducts = newProducts.map((p) => p.idProduk == (productsDibeli[i].produk).idProduk ? ({...p, stok: p.stok-productsDibeli[i].jumlah}) : p)
       }
       const sisaSaldo = userActive.saldo - total
       userActive.saldo = sisaSaldo
