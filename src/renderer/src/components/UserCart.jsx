@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, Navigate, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Container, Paper, Button, Box, Typography, TextField, Grid2, Card, Avatar, CardContent, Divider, Stack, CardMedia, Modal, Checkbox } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import { useNavigate } from "react-router-dom";
+import { Container, Button, Box, Typography, Card, Divider, Stack, CardMedia, Modal, Checkbox } from '@mui/material';
 import { AuthContext } from '../context/Auth';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
@@ -27,6 +25,10 @@ export default function UserCart() {
    const [open, setOpen] = useState(false);
    const handleOpen = () => setOpen(true);
    const handleClose = () => setOpen(false);
+
+   const [open2, setOpen2] = useState(null);
+   const handleOpen2 = (idx) => setOpen2(idx);
+   const handleClose2 = () => setOpen2(null);
 
    useEffect(() => {
       let newIsiKeranjang = []
@@ -68,6 +70,7 @@ export default function UserCart() {
       }
       setTotalChecked(newTotal)
       deleteItemKeranjang(idx)
+      handleClose2()
    }
 
    const navigate = useNavigate()
@@ -82,8 +85,6 @@ export default function UserCart() {
          <Container sx={{minHeight: '700px'}}>
             <Box style={{ padding: '20px' }}>
                <Typography variant="h4" gutterBottom>Keranjang Anda</Typography>
-
-               {/* Grid untuk menampilkan produk dalam keranjang secara vertikal */}
                <Stack spacing={2}>
                {isiKeranjang.map((a, index) => (
                   <Box key={index}>
@@ -111,7 +112,7 @@ export default function UserCart() {
                               <Button
                                  variant="contained"
                                  color="error"
-                                 onClick={() => deleteKeranjang(a.produk.idProduk)}
+                                 onClick={() => handleOpen2(a.produk.idProduk)}
                               >
                                  Delete
                               </Button>
@@ -158,6 +159,31 @@ export default function UserCart() {
                   
                </Modal>
                </div>
+
+               {/* Modal Konfirmasi Delete */}
+               {open2 &&
+                  <div>
+                     <Modal
+                        open={open2}
+                        onClose={handleClose2}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                     >
+                        <Box sx={styleModal}>
+                           <Typography id="modal-modal-title" variant="h6" component="h2">
+                              Apakah Anda yakin ingin menghapus produk ini dari keranjang?
+                           </Typography>
+                           <Button
+                              variant="contained"
+                              sx={{ mt: 2, backgroundColor: '#d32f2f' }}
+                              onClick={() => deleteKeranjang(open2)}
+                           >
+                              Hapus 
+                           </Button>
+                        </Box>
+                     </Modal>
+                  </div>
+               }
          </Container>
       </>
    )

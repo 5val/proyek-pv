@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Link, Container } from '@mui/material';
+import { Box, Typography, Container } from '@mui/material';
 
 export default function Footer() {
    return(
@@ -9,8 +9,8 @@ export default function Footer() {
           &copy; 2024 Tokotokoan. All Rights Reserved.
         </Typography>
         <Box sx={{ marginTop: 1 }}>
-          <Link href="#" sx={{ marginRight: 2 }}>Privacy Policy</Link>
-          <Link href="#">Terms of Service</Link>
+          <a href='' style={{ marginRight: '30px' }}>Privacy Policy</a>
+          <a href=''>Terms of Service</a>
         </Box>
       </Container>
     </Box>

@@ -1,5 +1,3 @@
-import './assets/main.css'
-
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
@@ -15,8 +13,7 @@ import UserCart from './components/UserCart'
 import {Elektronik, Default, Fashion, Kecantikan, Kesehatan, MakananMinuman, RumahTangga} from './components/Categories'
 import {
    createBrowserRouter,
-   Navigate,
-   RouterProvider,
+   RouterProvider
  } from "react-router-dom";
 import Auth from './context/Auth'
 
