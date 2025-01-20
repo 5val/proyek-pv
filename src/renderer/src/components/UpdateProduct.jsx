@@ -18,17 +18,7 @@ const styleModal = {
    p: 4,
 };
 
-// Style untuk modal konfirmasi
-const styleModal = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
- };
+
 
 export default function UpdateProduct() {
    const {arrProducts, productEdit, editProduct, addProduct, userActive} = useContext(AuthContext)
@@ -49,8 +39,7 @@ export default function UpdateProduct() {
 
    const navigate = useNavigate()
 
-   const handleOpen = () => setOpen(true);
-   const handleClose = () => setOpen(false);
+
 
    useEffect(() => {
       if (productEdit) {
