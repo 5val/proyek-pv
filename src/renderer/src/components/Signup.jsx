@@ -1,10 +1,6 @@
-import React, { useState, useReducer, useEffect, useContext } from 'react';
-import { Link, Navigate, NavLink, Outlet, useNavigate } from "react-router-dom";
-import { Container, Paper, Button, Box, Typography, TextField } from '@mui/material';
-
-// import DataContext, { AuthContext } from '../context/Auth';
-// import dataReducer from '../context/dataReducer';
-// import { ADD_PRODUCT, SET_PRODUCTS, SET_USERS, SET_TRANSACTIONS, ADD_USER } from '../context/types';
+import React, { useState, useContext } from 'react';
+import { NavLink, useNavigate } from "react-router-dom";
+import { Container, Button, Box, Typography, TextField } from '@mui/material';
 import { AuthContext } from '../context/Auth';
 
 function Signup() {
@@ -13,7 +9,6 @@ function Signup() {
    const [inpUsername, setInpUsername] = useState('')
    const [inpPass, setInpPass] = useState('')
    const [inpConfirm, setInpConfirm] = useState('')
-   // const [errConfirm, setErrConfirm] = useState('')
    const {signup, signupErr} = useContext(AuthContext)
    const navigate = useNavigate()
 
@@ -22,70 +17,9 @@ function Signup() {
       navigate('/login')
    }
 
-   // const initialData = {
-   //    products: [],
-   //    users: [],
-   //    transactions: []
-   // }
-
-   // const [state, dispatch] = useReducer(dataReducer, initialData)
-
-   // useEffect(() => {
-   //    window.api.loadProducts().then((data) => {
-   //       dispatch({
-   //          type: SET_PRODUCTS,
-   //          payload: data
-   //       })
-   //    })
-   //    window.api.loadUsers().then((data) => {
-   //       dispatch({
-   //          type: SET_USERS,
-   //          payload: data
-   //       })
-   //    })
-   //    window.api.loadTransactions().then((data) => {
-   //       dispatch({
-   //          type: SET_TRANSACTIONS,
-   //          payload: data
-   //       })
-   //    })
-      
-   // }, [dispatch])
-
-   // function handleSubmit(e) {
-   //    e.preventDefault()
-   //    if(inpPass !== inpConfirm) {
-   //       setErrConfirm('Input password tidak sama dengan konfirmasi password')
-   //       return
-   //    }
-   //    const newUser = {
-   //       id: state.users.length + 1,
-   //       username: inpUsername,
-   //       email: inpEmail,
-   //       password: inpPass,
-   //       nama: inpNama,
-   //       saldo: 0,
-   //       daftarPenjual: false,
-   //       keranjang: []
-   //    }
-   //    // addUser(newUser)
-   //    const newUsers = [...state.users, newUser]
-   //    window.api.saveUsers(newUsers)
-   //    navigate('/login')
-   // }
-
-   // function addUser(user) {
-   //    dispatch({
-   //       type: ADD_USER,
-   //       payload: user
-   //    })
-   // }
-
   return (
     <>
       <Container>
-         {/* <NavLink to='/login'>Login</NavLink>
-         <NavLink to='/'>Home</NavLink> */}
          <Container component="main" maxWidth="xs">
       <Box
         sx={{

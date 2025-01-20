@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, Navigate, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Container, Paper, Button, Box, Typography, TextField, Grid2, Card, Avatar, CardContent, Divider, Stack, CardMedia, Modal } from '@mui/material';
+import React, { useContext, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { Container, Button, Box, Typography, Grid2, Card, CardContent, Divider, CardMedia, Modal } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { AuthContext } from '../context/Auth';
-
-// import DataContext from '../context/Auth';
 
 const styleModal = {
    position: 'absolute',
@@ -21,13 +19,8 @@ const styleModal = {
 
 export default function BuyNow() {
    const [jumlah, setJumlah] = useState(1)
-   // const [users, setUsers] = useState([])
 
    const {arrUsers, arrTransactions, userActive, productClicked, buyProducts} = useContext(AuthContext)
-   // const user = context.userActive
-
-   // const location = useLocation()
-   // const produk = location.state
 
    const [open, setOpen] = React.useState(false);
    const handleOpen = () => setOpen(true);
@@ -35,41 +28,10 @@ export default function BuyNow() {
 
   const navigate = useNavigate()
 
-//   useEffect(() => {
-//    window.api.loadUsers().then((data) => {
-//       setUsers(data)
-//    })
-//   })
-
   function handleBeli() {
    const arrBeli = [{produk: productClicked, jumlah}]
    buyProducts(arrBeli, false)
-   // const sisaSaldo = userActive.saldo - (productClicked.harga* jumlah)
-   // userActive.saldo = sisaSaldo
-   // const newUsers = arrUsers.map((u) => {
-   //    if(u.index === userActive.index) {
-   //       return {...u, saldo: sisaSaldo}
-   //    } else {
-   //       return u
-   //    }
-   // })
-   // const newTransaction = {
-   //    idTransaksi: context.transactions.length + 1,
-   //    idPembeli: user.id,
-   //    produkDibeli: [
-   //       {
-   //          idProduk: produk.id,
-   //          jumlah: jumlah
-   //       }
-   //    ],
-   //    total: (produk.harga* jumlah)
-   // }
-   // const newTransactions = [...arrTransactions, newTransaction]
-   // window.api.saveUsers(newUsers)
-   // window.api.saveTransactions(newTransactions)
-   // navigate('/buysuccess', {state: arrBeli})
    handleClose()
-   // return <Navigate to='/buysuccess' />
    navigate('/buysuccess')
   }
 
@@ -173,8 +135,6 @@ export default function BuyNow() {
       </Modal>
     </div>
          </Container>
-
-         
       </>
    )
 }

@@ -1,9 +1,6 @@
-import React, { useContext, useState } from 'react';
-import { Link, Navigate, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Container, Paper, Button, Box, Typography, TextField, Grid2, Card, Avatar, CardContent, Divider, Stack, CardMedia, CardActions, Modal, ListItem, List } from '@mui/material';
+import React, { useContext } from 'react';
+import { Container, Box, Typography, Card, CardContent } from '@mui/material';
 import { AuthContext } from '../context/Auth';
-
-// import DataContext from '../context/Auth';
 
 export default function History() {
    const {arrProducts, arrTransactions, userActive} = useContext(AuthContext)
