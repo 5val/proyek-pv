@@ -1,37 +1,57 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, Navigate, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Container, Paper, Button, Box, Typography, TextField, Grid2, Card, Avatar, CardContent, Divider, Stack, CardMedia, FormControl, InputLabel, Select, MenuItem, InputAdornment, OutlinedInput } from '@mui/material';
+import { Container, Paper, Button, Box, Typography, TextField, Grid2, Card, Avatar, CardContent, Divider, Stack, CardMedia, FormControl, InputLabel, Select, MenuItem, InputAdornment, OutlinedInput, Modal } from '@mui/material';
 import { AuthContext } from '../context/Auth';
 
-// import DataContext from '../context/Auth';
+// Style untuk modal konfirmasi
+const styleModal = {
+   position: 'absolute',
+   top: '50%',
+   left: '50%',
+   transform: 'translate(-50%, -50%)',
+   width: 400,
+   bgcolor: 'background.paper',
+   boxShadow: 24,
+   p: 4,
+};
 
 export default function UpdateProduct() {
-   const {arrProducts, productEdit, editProduct, addProduct, userActive} = useContext(AuthContext)
-   // const [products, setProducts] = useState(context.products)
-   const [inpNama, setInpNama] = useState('')
-   const [inpKategori, setInpKategori] = useState('')
-   const [inpDesc, setInpDesc] = useState('')
-   const [inpGbr, setInpGbr] = useState('')
-   const [inpHarga, setInpHarga] = useState(0)
-   const [inpStok, setInpStok] = useState(1)
+   const { arrProducts, productEdit, editProduct, addProduct, userActive } = useContext(AuthContext);
+   const [inpNama, setInpNama] = useState('');
+   const [inpKategori, setInpKategori] = useState('');
+   const [inpDesc, setInpDesc] = useState('');
+   const [inpGbr, setInpGbr] = useState('');
+   const [inpHarga, setInpHarga] = useState(0);
+   const [inpStok, setInpStok] = useState(1);
 
-   // const location = useLocation()
-   // const produk = location.state
-   const navigate = useNavigate()
+   // State untuk modal konfirmasi
+   const [open, setOpen] = useState(false);  // Status modal
+   const [isEdit, setIsEdit] = useState(false);  // Flag untuk mengetahui apakah ini edit atau tambah
 
+   const navigate = useNavigate();
+
+   // Efek ketika productEdit tersedia
    useEffect(() => {
-      if(productEdit) {
-         setInpNama(productEdit.nama)
-         setInpKategori(productEdit.kategori)
-         setInpDesc(productEdit.deskripsi)
-         setInpGbr(productEdit.gambar)
-         setInpHarga(productEdit.harga)
-         setInpStok(productEdit.stok)
+      if (productEdit) {
+         setInpNama(productEdit.nama);
+         setInpKategori(productEdit.kategori);
+         setInpDesc(productEdit.deskripsi);
+         setInpGbr(productEdit.gambar);
+         setInpHarga(productEdit.harga);
+         setInpStok(productEdit.stok);
+         setIsEdit(true); // Menandakan kita sedang mengedit produk
+      } else {
+         setIsEdit(false); // Jika tidak ada produk untuk diedit, berarti menambah produk baru
       }
-   }, [])
+   }, [productEdit]);
 
-   function handleSubmit() {
-      if(productEdit) {
+   // Fungsi untuk membuka dan menutup modal
+   const handleOpen = () => setOpen(true);
+   const handleClose = () => setOpen(false);
+
+   // Fungsi untuk mengonfirmasi tindakan simpan produk
+   const handleSubmit = () => {
+      if (isEdit) {
          const newProduct = {
             idProduk: productEdit.idProduk,
             idPenjual: productEdit.idPenjual,
@@ -41,20 +61,8 @@ export default function UpdateProduct() {
             gambar: inpGbr,
             harga: inpHarga,
             stok: inpStok
-         }
-
-         editProduct(newProduct)
-
-         // const newProducts = arrProducts.map((p) => {
-         //    if(productEdit.idProduk === p.idProduk) {
-         //       return newProduct
-         //    } else {
-         //       return p
-         //    }
-         // })
-         // setProducts(newProducts)
-         // context.editProduct(newProduk)
-         // window.api.saveProducts(newProducts)
+         };
+         editProduct(newProduct);
       } else {
          const newProduct = {
             idProduk: arrProducts.length + 1,
@@ -65,39 +73,33 @@ export default function UpdateProduct() {
             gambar: inpGbr,
             harga: inpHarga,
             stok: inpStok
-         }
-
-         addProduct(newProduct)
-
-         // const newProducts = [...arrProducts, newProduk]
-         // setProducts(newProducts)
-         // context.addProduct(newProduk)
-         // window.api.saveProducts(newProducts)
+         };
+         addProduct(newProduct);
       }
-      // navigate('/profile')
-      navigate('/profile')
-   }
+      navigate('/profile');
+      handleClose();  // Menutup modal setelah konfirmasi
+   };
 
-   return(
+   return (
       <>
-         <Container sx={{minHeight: '680px', marginTop: '100px'}}>
-            <Typography variant="h5">{productEdit ? 'Edit Produk' : 'Tambah Produk Baru'}</Typography>
-            
+         <Container sx={{ minHeight: '680px', marginTop: '100px' }}>
+            <Typography variant="h5">{isEdit ? 'Edit Produk' : 'Tambah Produk Baru'}</Typography>
+
             <Box
                component="form"
                sx={{
-               mt: 1,
-               width: '100%',
+                  mt: 1,
+                  width: '100%',
                }}
             >
                <TextField
-               label="Nama Produk"
-               fullWidth
-               variant="outlined"
-               margin="normal"
-               required
-               value={inpNama}
-               onChange={(e) => setInpNama(e.target.value)}
+                  label="Nama Produk"
+                  fullWidth
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  value={inpNama}
+                  onChange={(e) => setInpNama(e.target.value)}
                />
                <FormControl fullWidth margin='normal'>
                   <InputLabel id="demo-simple-select-label">Kategori</InputLabel>
@@ -115,27 +117,27 @@ export default function UpdateProduct() {
                      <MenuItem value='Kesehatan'>Kesehatan</MenuItem>
                      <MenuItem value='Makanan & Minuman'>Makanan & Minuman</MenuItem>
                   </Select>
-                  </FormControl>
+               </FormControl>
                <TextField
-               id="outlined-multiline-static"
-               multiline
-               label="Deskripsi Produk"
-               fullWidth
-               variant="outlined"
-               margin="normal"
-               rows={4}
-               required
-               value={inpDesc}
-               onChange={(e) => setInpDesc(e.target.value)}
+                  id="outlined-multiline-static"
+                  multiline
+                  label="Deskripsi Produk"
+                  fullWidth
+                  variant="outlined"
+                  margin="normal"
+                  rows={4}
+                  required
+                  value={inpDesc}
+                  onChange={(e) => setInpDesc(e.target.value)}
                />
                <TextField
-               label="Link Gambar"
-               fullWidth
-               variant="outlined"
-               margin="normal"
-               required
-               value={inpGbr}
-               onChange={(e) => setInpGbr(e.target.value)}
+                  label="Link Gambar"
+                  fullWidth
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  value={inpGbr}
+                  onChange={(e) => setInpGbr(e.target.value)}
                />
                <FormControl fullWidth margin='normal'>
                   <InputLabel>Harga</InputLabel>
@@ -149,31 +151,59 @@ export default function UpdateProduct() {
                   />
                </FormControl>
                <TextField
-               label="Stok"
-               type='number'  
-               fullWidth
-               variant="outlined"
-               margin="normal"
-               required
-               value={inpStok}
-               onChange={(e) => setInpStok(e.target.value)}
+                  label="Stok"
+                  type='number'
+                  fullWidth
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  value={inpStok}
+                  onChange={(e) => setInpStok(e.target.value)}
                />
-   
+
                <Button
-               fullWidth
-               variant="contained"
-               sx={{
-                  backgroundColor: '#00b94e',
-                  '&:hover': { backgroundColor: '#009e3f' },
-                  mt: 2,
-                  padding: '10px',
-               }}
-               onClick={handleSubmit}
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                     backgroundColor: '#00b94e',
+                     '&:hover': { backgroundColor: '#009e3f' },
+                     mt: 2,
+                     padding: '10px',
+                  }}
+                  onClick={handleOpen} // Memanggil modal konfirmasi
                >
-               {productEdit ? 'Edit' : 'Tambah'}
+                  {isEdit ? 'Edit' : 'Tambah'}
                </Button>
             </Box>
          </Container>
+
+         {/* Modal Konfirmasi */}
+         <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+         >
+            <Box sx={styleModal}>
+               <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Apakah Anda yakin ingin {isEdit ? 'mengedit' : 'menambah'} produk ini?
+               </Typography>
+               <Button
+                  variant="contained"
+                  sx={{ mt: 2, backgroundColor: '#00b140' }}
+                  onClick={handleSubmit}
+               >
+                  Konfirmasi
+               </Button>
+               <Button
+                  variant="outlined"
+                  sx={{ mt: 2, marginLeft: '10px' }}
+                  onClick={handleClose}
+               >
+                  Batal
+               </Button>
+            </Box>
+         </Modal>
       </>
-   )
+   );
 }
