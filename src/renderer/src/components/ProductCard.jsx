@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { Link, Navigate, NavLink, Outlet, useNavigate } from "react-router-dom";
-import { Container, Paper, Button, Grid2, Card, CardMedia, CardContent, Typography, CardActions, Modal, Box } from '@mui/material';
+import { useNavigate } from "react-router-dom";
+import { Button, Grid2, Card, CardMedia, CardContent, Typography, CardActions, Modal, Box } from '@mui/material';
 import { AuthContext } from '../context/Auth';
 
 const styleModal = {

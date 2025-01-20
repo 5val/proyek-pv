@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
-import { Container, Paper, Button } from '@mui/material';
+import React from 'react';
+import { Outlet, useOutletContext  } from "react-router-dom";
+import { Container } from '@mui/material';
 import Carousel from 'react-material-ui-carousel'
 
 function Home() {
+   const context = useOutletContext();
+
    const imgCarousel = [
       {
           src: 'https://images.tokopedia.net/img/cache/1208/NsjrJu/2024/7/22/6d79d227-67fe-497a-a904-af990882e2ee.jpg.webp?ect=4g'
@@ -25,7 +27,7 @@ function Home() {
             }
          </Carousel>
          <Container>
-            <Outlet></Outlet>
+            <Outlet context={context} />
          </Container>
       </Container>
     </>

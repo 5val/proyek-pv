@@ -1,10 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { Link, Navigate, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Container, Paper, Button, Box, Typography, TextField, Grid2, Card, Avatar, CardContent, Divider, Stack, CardMedia, CardActions, Modal } from '@mui/material';
+import { NavLink, useNavigate } from "react-router-dom";
+import { Container, Paper, Button, Box, Typography, Grid2, Card, Avatar, CardContent, Divider, Stack, Modal } from '@mui/material';
 import { AuthContext } from '../context/Auth';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
-
-// import DataContext from '../context/Auth';
 
 const styleModal = {
    position: 'absolute',
@@ -19,8 +17,6 @@ const styleModal = {
 
 export default function Profile() {
    const {arrProducts, userActive, deleteProduct, moveEditPage, logout, userDaftarPenjual} = useContext(AuthContext)
-   // const [products, setProducts] = useState(context.products)
-   // const user = context.userActive
 
    let userProducts = []
    if(userActive.daftarPenjual) {
@@ -28,7 +24,9 @@ export default function Profile() {
    }
 
    const [open, setOpen] = useState(null);
+
       const handleOpen = (idProduk) => setOpen(idProduk);
+
       const handleClose = () => setOpen(null);
 
    const navigate = useNavigate()
@@ -40,15 +38,16 @@ export default function Profile() {
 
    function handleEdit(produk) {
       moveEditPage(produk)
-      // return <Navigate to='/updateproduct' />
       navigate('/updateproduct')
    }
+
 
    function handleDelete(idProduk) {
       deleteProduct(idProduk)
       // const newProducts = products.filter((p) => p.idProduk !== idx)
       // setProducts(newProducts)
       // window.api.saveProducts(newProducts)
+
       handleClose()
    }
 
@@ -109,7 +108,6 @@ export default function Profile() {
    return (
       <>
          <Container sx={{minHeight: '700px'}}>
-         {/* <h1>{user.nama}</h1> */}
          <Container sx={{ paddingTop: 3}}>
          <Grid2 container spacing={3}>
          <Grid2 size={4}>
@@ -167,43 +165,16 @@ export default function Profile() {
                      <NavLink to='/updateproduct'><Button variant='contained' sx={{backgroundColor: '#00b140'}}>Tambah Produk Baru</Button></NavLink>
                   </Box>
                   {userProducts.length > 0 ? (
-                     // <Grid2 container spacing={3} sx={{marginTop: '30px'}}>
-                     // {arrProducts.map((p, index) => {
-                     //    if(p.idPenjual === userActive.id) {
-                     //       return (
-                     //          <Grid2 key={index} size={3}>
-                     //          <Card sx={{ maxWidth: 375 }}>
-                     //             <CardMedia
-                     //             component="img"
-                     //             alt="green iguana"
-                     //             height="140"
-                     //             image={p.gambar}
-                     //             />
-                     //             <CardContent sx={{height: '120px'}}>
-                     //             <Typography gutterBottom variant="h5" component="div">
-                     //                {p.nama}
-                     //             </Typography>
-                     //             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                     //                Rp {(p.harga).toLocaleString('ID-id')}
-                     //             </Typography>
-                     //             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                     //                {p.deskripsi}
-                     //             </Typography>
-                     //             </CardContent>
-                     //             <CardActions>
-                     //                <Button variant='contained' sx={{backgroundColor: '#00b140'}} onClick={() => handleEdit(p)}>Edit</Button>
-                     //                <Button variant='contained' sx={{backgroundColor: 'red'}} onClick={() => handleOpen(index)}>Delete</Button>
-                     //                </CardActions>
-                     //          </Card>
-                     //       </Grid2>
-                     //       )
-                     //    }
-                     // })}
-                     // </Grid2>
                      <DataGrid
                         columns={columns}
                         rows={userProducts}
                         getRowId={(row) => row.idProduk}
+                        pageSizeOptions={[10, 25, 50, 100]}
+                        slots={{ toolbar: GridToolbar }}
+                        initialState={{
+                           pagination: { paginationModel: { page: 0, pageSize: 10 } },
+                           sorting: { sortModel: [{ field: 'studentId', sort: 'asc' }] }
+                        }}
                      />
                   )
                   :
@@ -221,9 +192,10 @@ export default function Profile() {
             )}
          </Box>
       </Container>
+
       {open !== null && 
+
          <div>
-            {/* <Button onClick={handleOpen}>Open modal</Button> */}
             <Modal
             open={true}
             onClose={handleClose}

@@ -1,16 +1,10 @@
-import React, { useContext, useState } from 'react';
-import { Link, Navigate, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Container, Paper, Button, Box, Typography, TextField, Grid2, Card, Avatar, CardContent, Divider, Stack, CardMedia, Modal } from '@mui/material';
+import React, { useContext } from 'react';
+import { NavLink } from "react-router-dom";
+import { Container, Paper, Button, Box, Typography, Grid2 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { AuthContext } from '../context/Auth';
 
-// import DataContext from '../context/Auth';
-
 export default function BuySuccess() {
-   // const location = useLocation()
-   // const arrBeli = location.state
-
    const {transActive} = useContext(AuthContext)
 
    let totalHarga = 0

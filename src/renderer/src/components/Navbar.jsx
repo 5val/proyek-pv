@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Link, Navigate, NavLink, Outlet, useNavigate } from "react-router-dom";
+import React, { useContext, useState} from 'react';
+import { NavLink, useNavigate } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Button, Box, TextField, IconButton, Avatar } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -7,9 +7,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { AuthContext } from '../context/Auth';
 
-// import DataContext from '../context/Auth';
+export default function Navbar({onSearch}) {
+   const [inputValue, setInputValue] = useState("");
 
-export default function Navbar() {
+   const {userActive} = useContext(AuthContext)
+
    const [anchorEl, setAnchorEl] = React.useState(null);
    const open = Boolean(anchorEl);
    const handleClick = (event) => {
@@ -19,8 +21,13 @@ export default function Navbar() {
       setAnchorEl(null);
    };
 
-   const {userActive} = useContext(AuthContext)
-   const navigate = useNavigate()
+   const handleInputChange = (event) => {
+      const query = event.target.value;
+      setInputValue(query);
+      if (onSearch) {
+          onSearch(query);
+      }
+    };
 
    return(
       <AppBar position="fixed" sx={{ backgroundColor: '#00b140' }}>
@@ -66,6 +73,8 @@ export default function Navbar() {
           <TextField
             variant="outlined"
             size="small"
+            value={inputValue}
+            onChange={handleInputChange}
             placeholder="Search products, brands, or categories"
             sx={{ backgroundColor: 'white', borderRadius: 1, width: '700px' }}
           />
