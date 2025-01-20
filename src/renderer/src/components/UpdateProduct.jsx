@@ -1,5 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+
+//hasil nyampah
+import React, { useContext, useEffect, useReducer, useState } from 'react';
+import { Link, Navigate, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+
 import { Container, Paper, Button, Box, Typography, TextField, Grid2, Card, Avatar, CardContent, Divider, Stack, CardMedia, FormControl, InputLabel, Select, MenuItem, InputAdornment, OutlinedInput, Modal } from '@mui/material';
 import { AuthContext } from '../context/Auth';
 
@@ -15,6 +18,8 @@ const styleModal = {
    p: 4,
 };
 
+
+
 export default function UpdateProduct() {
    const {arrProducts, productEdit, editProduct, addProduct, userActive} = useContext(AuthContext)
    const [inpNama, setInpNama] = useState('')
@@ -24,13 +29,17 @@ export default function UpdateProduct() {
    const [inpHarga, setInpHarga] = useState(0)
    const [inpStok, setInpStok] = useState(1)
 
-   // State untuk modal konfirmasi
-   const [open, setOpen] = useState(false);  // Status modal
-   const [isEdit, setIsEdit] = useState(false);  // Flag untuk mengetahui apakah ini edit atau tambah
-   const navigate = useNavigate()
 
+   const [open, setOpen] = useState(false);
    const handleOpen = () => setOpen(true);
    const handleClose = () => setOpen(false);
+
+   // const location = useLocation()
+   // const produk = location.state
+
+   const navigate = useNavigate()
+
+
 
    useEffect(() => {
       if (productEdit) {
@@ -199,6 +208,35 @@ export default function UpdateProduct() {
                </Box>
             </Modal>
          </Container>
+
+         {/* Modal Konfirmasi */}
+         <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+         >
+            <Box sx={styleModal}>
+               <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Apakah Anda yakin ingin {productEdit ? 'mengedit' : 'menambah'} produk ini?
+               </Typography>
+               <Button
+                  variant="contained"
+                  sx={{ mt: 2, backgroundColor: '#00b140' }}
+                  onClick={handleSubmit}
+               >
+                  Konfirmasi
+               </Button>
+               <Button
+                  variant="outlined"
+                  sx={{ mt: 2, marginLeft: '10px' }}
+                  onClick={handleClose}
+               >
+                  Batal
+               </Button>
+            </Box>
+         </Modal>
+         
       </>
    )
 }

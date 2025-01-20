@@ -24,7 +24,9 @@ export default function Profile() {
    }
 
    const [open, setOpen] = useState(null);
-      const handleOpen = (idx) => setOpen(idx);
+
+      const handleOpen = (idProduk) => setOpen(idProduk);
+
       const handleClose = () => setOpen(null);
 
    const navigate = useNavigate()
@@ -39,8 +41,13 @@ export default function Profile() {
       navigate('/updateproduct')
    }
 
-   function handleDelete(idx) {
-      deleteProduct(idx)
+
+   function handleDelete(idProduk) {
+      deleteProduct(idProduk)
+      // const newProducts = products.filter((p) => p.idProduk !== idx)
+      // setProducts(newProducts)
+      // window.api.saveProducts(newProducts)
+
       handleClose()
    }
 
@@ -185,7 +192,9 @@ export default function Profile() {
             )}
          </Box>
       </Container>
-      {open && 
+
+      {open !== null && 
+
          <div>
             <Modal
             open={true}

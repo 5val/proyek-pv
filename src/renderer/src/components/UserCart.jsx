@@ -26,9 +26,11 @@ export default function UserCart() {
    const handleOpen = () => setOpen(true);
    const handleClose = () => setOpen(false);
 
-   const [open2, setOpen2] = useState(null);
-   const handleOpen2 = (idx) => setOpen2(idx);
-   const handleClose2 = () => setOpen2(null);
+
+   const [open2, setOpen2] = useState(false);
+   const handleOpen2 = () => setOpen2(true);
+   const handleClose2 = () => setOpen2(false);
+
 
    useEffect(() => {
       let newIsiKeranjang = []
@@ -69,8 +71,9 @@ export default function UserCart() {
          newTotal = newTotal += (newKeranjang[i].produk.harga * newKeranjang[i].jumlah)
       }
       setTotalChecked(newTotal)
-      deleteItemKeranjang(idx)
       handleClose2()
+      deleteItemKeranjang(idx)
+
    }
 
    const navigate = useNavigate()
@@ -112,14 +115,38 @@ export default function UserCart() {
                               <Button
                                  variant="contained"
                                  color="error"
-                                 onClick={() => handleOpen2(a.produk.idProduk)}
+
+                                 onClick={handleOpen2}
+
                               >
                                  Delete
                               </Button>
                            </Box>
                      </Box>
                      </Card>
+                     {/* Modal Konfirmasi Delete */}
+                     <Modal
+                        open={open2}
+                        onClose={handleClose2}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                     >
+                        <Box sx={styleModal}>
+                           <Typography id="modal-modal-title" variant="h6" component="h2">
+                              Apakah Anda yakin ingin menghapus produk ini dari keranjang?
+                           </Typography>
+                           <Button
+                              variant="contained"
+                              sx={{ mt: 2, backgroundColor: '#d32f2f' }}
+                              onClick={() => deleteKeranjang(a.produk.idProduk)}
+                           >
+                              Hapus 
+                           </Button>
+                        </Box>
+                     </Modal>
                   </Box>
+                  
+                  
                ))}
                </Stack>
 
@@ -158,6 +185,7 @@ export default function UserCart() {
                   }
                   
                </Modal>
+               
                </div>
 
                {/* Modal Konfirmasi Delete */}
