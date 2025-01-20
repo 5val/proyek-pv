@@ -27,9 +27,9 @@ export default function Profile() {
       userProducts = arrProducts.filter((p) => p.idPenjual == userActive.id)
    }
 
-   const [open, setOpen] = useState(-1);
-      const handleOpen = (idx) => setOpen(idx);
-      const handleClose = () => setOpen(-1);
+   const [open, setOpen] = useState(null);
+      const handleOpen = (idProduk) => setOpen(idProduk);
+      const handleClose = () => setOpen(null);
 
    const navigate = useNavigate()
 
@@ -44,8 +44,8 @@ export default function Profile() {
       navigate('/updateproduct')
    }
 
-   function handleDelete(idx) {
-      deleteProduct(idx)
+   function handleDelete(idProduk) {
+      deleteProduct(idProduk)
       // const newProducts = products.filter((p) => p.idProduk !== idx)
       // setProducts(newProducts)
       // window.api.saveProducts(newProducts)
@@ -100,7 +100,7 @@ export default function Profile() {
          renderCell: (params) => (
             <>
                <Button variant='contained' sx={{backgroundColor: '#00b140'}} onClick={() => handleEdit(params.row)}>Edit</Button>
-               <Button variant='contained' sx={{backgroundColor: 'red', marginLeft: 1}} onClick={() => handleOpen(params.row.idProduk-1)}>Delete</Button>
+               <Button variant='contained' sx={{backgroundColor: 'red', marginLeft: 1}} onClick={() => handleOpen(params.row.idProduk)}>Delete</Button>
             </>
          )
       }
@@ -221,7 +221,7 @@ export default function Profile() {
             )}
          </Box>
       </Container>
-      {open > -1 && 
+      {open !== null && 
          <div>
             {/* <Button onClick={handleOpen}>Open modal</Button> */}
             <Modal
@@ -232,9 +232,9 @@ export default function Profile() {
             >
                <Box sx={styleModal}>
                   <Typography id="modal-modal-title" variant="h6" component="h2">
-                     Anda yakin ingin menghapus produk {arrProducts[open].nama}?
+                     Anda yakin ingin menghapus produk {arrProducts.find(p => p.idProduk === open)?.nama}?
                   </Typography>
-                  <Button variant='contained' id='modal-modal-description' sx={{ mt: 2, backgroundColor: 'red' }} onClick={() => handleDelete(arrProducts[open].idProduk)}>
+                  <Button variant='contained' id='modal-modal-description' sx={{ mt: 2, backgroundColor: 'red' }} onClick={() => handleDelete(open)}>
                      Delete
                   </Button>
                </Box>
