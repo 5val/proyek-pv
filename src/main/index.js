@@ -57,7 +57,6 @@ app.whenReady().then(() => {
   ipcMain.on('saveProducts', function(event, products) {
       fs.writeFileSync('./produk.json', JSON.stringify(products))
   })
-
   ipcMain.handle('loadProducts', function() {
    return JSON.parse(fs.readFileSync('./produk.json'))
   })
@@ -65,7 +64,6 @@ app.whenReady().then(() => {
   ipcMain.on('saveUsers', function(event, users) {
       fs.writeFileSync('./users.json', JSON.stringify(users))
    })
-
    ipcMain.handle('loadUsers', function() {
    return JSON.parse(fs.readFileSync('./users.json'))
    })
@@ -73,7 +71,6 @@ app.whenReady().then(() => {
    ipcMain.on('saveTransactions', function(event, transactions) {
       fs.writeFileSync('./transaksi.json', JSON.stringify(transactions))
   })
-
   ipcMain.handle('loadTransactions', function() {
    return JSON.parse(fs.readFileSync('./transaksi.json'))
   })

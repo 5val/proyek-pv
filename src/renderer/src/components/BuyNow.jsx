@@ -19,7 +19,6 @@ const styleModal = {
 
 export default function BuyNow() {
    const [jumlah, setJumlah] = useState(1)
-
    const {userActive, productClicked, buyProducts} = useContext(AuthContext)
 
    const [open, setOpen] = React.useState(false);
@@ -107,33 +106,32 @@ export default function BuyNow() {
          </Container>
 
          <div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-         {
-            userActive.saldo < (productClicked.harga)* jumlah ? (
-               <Box sx={styleModal}>
-               <Typography id="modal-modal-title" variant="h6" component="h2">
-                  Saldo Anda tidak cukup
-               </Typography>
-               </Box>
-            ) : (
-               <Box sx={styleModal}>
-                  <Typography id="modal-modal-title" variant="h6" component="h2">
-                     Anda yakin ingin melanjutkan pembelian?
-                  </Typography>
-                  <Button variant='contained' id='modal-modal-description' sx={{ mt: 2, backgroundColor: '#00b140' }} onClick={handleBeli}>
-                     Konfirmasi
-                  </Button>
-               </Box>
-            )
-         }
-        
-      </Modal>
-    </div>
+            <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            >
+               {
+                  userActive.saldo < (productClicked.harga)* jumlah ? (
+                     <Box sx={styleModal}>
+                     <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Saldo Anda tidak cukup
+                     </Typography>
+                     </Box>
+                  ) : (
+                     <Box sx={styleModal}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                           Anda yakin ingin melanjutkan pembelian?
+                        </Typography>
+                        <Button variant='contained' id='modal-modal-description' sx={{ mt: 2, backgroundColor: '#00b140' }} onClick={handleBeli}>
+                           Konfirmasi
+                        </Button>
+                     </Box>
+                  )
+               }
+            </Modal>
+         </div>
          </Container>
       </>
    )

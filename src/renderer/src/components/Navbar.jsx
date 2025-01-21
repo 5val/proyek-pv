@@ -9,7 +9,6 @@ import { AuthContext } from '../context/Auth';
 
 export default function Navbar({onSearch}) {
    const [inputValue, setInputValue] = useState("");
-
    const {userActive} = useContext(AuthContext)
 
    const [anchorEl, setAnchorEl] = React.useState(null);
