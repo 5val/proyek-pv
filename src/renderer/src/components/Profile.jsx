@@ -34,6 +34,10 @@ export default function Profile() {
       navigate('/login')
    }
 
+   function handleTopUp(){
+      navigate('/topup')
+   }
+
    function handleEdit(produk) {
       moveEditPage(produk)
       navigate('/updateproduct')
@@ -113,9 +117,14 @@ export default function Profile() {
                <Typography variant="h6">{userActive.nama}</Typography>
                <Typography color="textSecondary">{userActive.username}</Typography>
                <Typography variant="h6" sx={{marginTop: '30px'}}>Saldo : Rp {(userActive.saldo).toLocaleString('ID-id')}</Typography>
-               <Button variant="contained" sx={{ marginTop: 2, backgroundColor: '#00b140' }} onClick={handleLogout}>
-                Logout
-              </Button>
+               <Box sx={{justifyContent:'space-evenly', display:'flex'}}>
+                     <Button variant="contained" sx={{ marginTop: 2, backgroundColor: '#ff0000' }} onClick={handleLogout}>
+                        Logout
+                     </Button>
+                     <Button variant="contained" sx={{ marginTop: 2, backgroundColor: '#3A3AFF' }} onClick={handleTopUp}>
+                       Topup
+                     </Button>
+                  </Box>
                </Box>
             </Card>
          </Grid2>

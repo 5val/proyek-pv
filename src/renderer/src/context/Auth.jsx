@@ -197,7 +197,15 @@ export default function Auth({children}) {
       setUserActive(newUserActive)
    }
 
-   const auth = {arrUsers, arrProducts, arrTransactions, userActive, login, logout, signup, loginErr, signupErr, addProduct, editProduct, deleteProduct, productEdit, moveEditPage, moveBuyNowPage, productClicked, buyProducts, transActive, userDaftarPenjual, deleteItemKeranjang, addKeranjangUser}
+   // --------------BAGIAN ROYCE------------------
+   function topUp(){
+      const newUsers = arrUsers.map((u) => u.id == userActive.id ? userActive : u);
+      setArrUsers(newUsers)
+      window.api.saveUsers(newUsers)
+   }
+   // --------------BAGIAN ROYCE------------------
+
+   const auth = {arrUsers, arrProducts, arrTransactions, userActive, login, logout, signup, loginErr, signupErr, addProduct, editProduct, deleteProduct, productEdit, moveEditPage, moveBuyNowPage, productClicked, buyProducts, transActive, userDaftarPenjual, deleteItemKeranjang, addKeranjangUser, topUp}
 
    return <AuthContext.Provider value={auth}>
       {children}

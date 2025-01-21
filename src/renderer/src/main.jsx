@@ -1,3 +1,4 @@
+import './assets/topUp.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
@@ -10,6 +11,7 @@ import BuySuccess from './components/BuySuccess'
 import UpdateProduct from './components/UpdateProduct'
 import History from './components/History'
 import UserCart from './components/UserCart'
+import TopUp from './components/TopUp'
 import {Elektronik, Default, Fashion, Kecantikan, Kesehatan, MakananMinuman, RumahTangga} from './components/Categories'
 import {
    createBrowserRouter,
@@ -88,6 +90,10 @@ const router = createBrowserRouter([
          {
             path: '/usercart',
             element: <UserCart />
+         },
+         {
+            path: '/topup',
+            element: <TopUp />
          }
       ]
    },

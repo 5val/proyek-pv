@@ -20,7 +20,7 @@ const styleModal = {
 export default function BuyNow() {
    const [jumlah, setJumlah] = useState(1)
 
-   const {arrUsers, arrTransactions, userActive, productClicked, buyProducts} = useContext(AuthContext)
+   const {userActive, productClicked, buyProducts} = useContext(AuthContext)
 
    const [open, setOpen] = React.useState(false);
    const handleOpen = () => setOpen(true);
